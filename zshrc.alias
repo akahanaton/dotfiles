@@ -1,0 +1,88 @@
+# some more ls aliases
+alias ls='ls -G --color'
+alias ll='ls -l --color'
+alias lf='ls -f'
+alias la='ls -A --color'
+alias l='ls -CF --color'
+alias lh="ls -G -lh --color"
+alias lnew="ls -G -lhnt --color"
+# some more ls aliases
+alias m="more"
+alias h="head -20"
+alias t="tail"
+alias q="exit"
+alias tf="tail -f"
+alias enw='emacs -nw'
+alias k9='kill -9'
+alias t1='tmux attach -t 1'
+alias t2='tmux attach -t 2'
+alias t3='tmux attach -t 3'
+alias t4='tmux attach -t 4'
+alias t5='tmux attach -t 5'
+alias tn1='tmux new-session -s 1'
+alias tn2='tmux new-session -s 2'
+alias tn3='tmux new-session -s 3'
+alias tn4='tmux new-session -s 4'
+alias tn5='tmux new-session -s 5'
+alias tt='tmux attach -t tmuxinator'
+alias th='tmux attach -t tmuxHtml'
+
+#--------------------------------------------------
+# export LESSOPEN='|~/.lessfilter %s'
+#--------------------------------------------------
+# quit without cleaning the screen
+export LESS='-R -X'
+# alias lss='/usr/bin/less -S -R -X'
+alias lss='bat'
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;5;016m\E[48;5;220m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+#--------------------------------------------------
+# export GREP_OPTIONS='--color=always -R'
+#--------------------------------------------------
+alias cgrep='grep --color=always -R'
+alias convertpdf="convert -quality 100 -density 600"
+alias ctags_cpp="ctags --recurse --c++-kinds=cmnp --fields=+ianmzS --extras=+fq --exclude=Debug ."
+alias dateF="date +'%F'"
+alias mkdirtoday="mkdir `date +'%F'`"
+
+alias vi="nvim"
+alias lv="lvim"
+
+#--------------------------------------------------
+# alias bash="/home/gmswenm/software/bin/bash"
+# alias sh="/home/gmswenm/software/bin/bash"
+#--------------------------------------------------
+
+#--------------------------------------------------
+# alias gcc="/usr/bin/gcc"
+# alias g++="/usr/bin/g++"
+#--------------------------------------------------
+#--------------------------------------------------
+# alias gcc="/home/gmswenm/software/bin/gcc"
+# alias g++="/home/gmswenm/software/bin/g++"
+#--------------------------------------------------
+
+# mkdir, cd into it
+mkcd () {
+	mkdir -p "$*"
+	cd "$*"
+}
+
+calc(){ awk "BEGIN { print "$*" }"; }
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+alias sshAquila='ssh wenm@aquila'
+#--------------------------------------------------
+# alias sshn111='ssh wenm@10.218.129.145'
+#--------------------------------------------------
+
+# alias xup="xrdb ~/.Xresources"
+# alias chrom="chromium"
+# alias fehView="feh -d -F --keep-zoom-vp"
+# alias IGV="~/software/src/IGV_Linux_2.5.0/igv.sh"

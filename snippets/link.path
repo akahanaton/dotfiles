@@ -1,0 +1,3 @@
+ln -s ~/linuxrcfiles/snippets ~/.config/lvim/snippets
+convert ultisnips to friendly-snippets:
+  convert-snippets sh.snippets sh.json

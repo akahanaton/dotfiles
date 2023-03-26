@@ -1,0 +1,246 @@
+{
+  "args": {
+    "prefix": "args",
+    "body": "if [ $# -lt ${1:argsNum}  ]; then\n\techo \\\"Usage : \\$0 ${2:args1} ${3:args2}\\\"\n\texit;\nfi\n$2=\\$1\n$3=\\$2"
+  },
+  "sourceHpc": {
+    "prefix": "sourceHpc",
+    "body": "source /home/wenm/LinuxRCFiles/bashrc.${1:hpc}"
+  },
+  "forxSeq": {
+    "prefix": "forxSeq",
+    "body": "begin=1\nfor y in $(seq $begin 4); do\n\techo $y\ndone",
+    "description": "for x in {a..b}"
+  },
+  "forx": {
+    "prefix": "forx",
+    "body": "for x in {${1:a}..${2:b}}; do\n    echo $x\ndone",
+    "description": "for x in {a..b}"
+  },
+  "hash": {
+    "prefix": "hash",
+    "body": "declare -A stageColors=([\"D0\"]=\"yellow\" [\"D7\"]=\"orange\" [\"D8\"]=\"green\" [\"D14\"]=\"pink\")\nfor stage in \"${!stageColors[@]}\"; do\n    color=\"${stageColors[$stage]}\"\n    echo $stage\n    echo $color\ndone",
+    "description": "define and use hash in bash"
+  },
+  "ifStringMatch": {
+    "prefix": "ifStringMatch",
+    "body": "if [[ \"${1:line}\" =~ ^${2:this}.*|^${3:that} ]]; then\n\t${0:#statements}\nfi",
+    "description": "this or that"
+  },
+  "ifStringEqual": {
+    "prefix": "ifStringEqual",
+    "body": "if [[ ${1:str1} == ${2:str2} ]]; then\n\t${0:#statements}\nfi",
+    "description": "this == that"
+  },
+  "ifNumEq": {
+    "prefix": "ifNumEq",
+    "body": "if [ ${1:var} -eq 1 -o $1 -eq 5 ]; then\n\techo \"hello\"\nfi",
+    "description": "Description"
+  },
+  "ifDirEmpty": {
+    "prefix": "ifDirEmpty",
+    "body": "if [ -z \"$(ls -A ${1:dirName})\" ]; then\n\t${0:#statements}\nfi",
+    "description": "test folder is empty"
+  },
+  "createDir": {
+    "prefix": "createDir",
+    "body": "outDir=${1:dir}\nif [[ ! -e $outDir ]]; then\n\tmkdir $outDir\nfi",
+    "description": "Description"
+  },
+  "fileExist": {
+    "prefix": "fileExist",
+    "body": "if [[ -e ${1:file} ]]; then\n\t${0:#statements}\nfi",
+    "description": "test file is exist"
+  },
+  "fileExistWildcard": {
+    "prefix": "fileExistWildcard",
+    "body": "if ls /path/to/your/files* 1> /dev/null 2>&1; then\n    echo \"files do exist\"\nelse\n    echo \"files do not exist\"\nfi",
+    "description": "Description"
+  },
+  "varSet": {
+    "prefix": "varSet",
+    "body": "if [ -n \"\\$\\{${1:9}+set\\}\" ]; then denatureDir=\\$$1;  fi",
+    "description": "test if a variable is set or not"
+  },
+  "awk": {
+    "prefix": "awk",
+    "body": "awk '\\$${1:1}>=0 \\{print \\$1\\}' ${2:#filename}"
+  },
+  "awkUniq": {
+    "prefix": "awkUniq",
+    "body": "awk '!_[${1:\\$1}]++' ${2:#filename}",
+    "description": "awk unique by filed 1"
+  },
+  "awkCutPasteMultFile": {
+    "prefix": "awkCutPasteMultFile",
+    "body": "awk '{L[FNR]=L[FNR] $3 \"\\t\" $6 \"\\t\"}END{for(i=1;i<=FNR;i++)print L[i]}' file1 file2",
+    "description": "Description"
+  },
+  "awkfilter2": {
+    "prefix": "awkfilter2",
+    "body": "awk 'FNR==NR { a[\\$${1:1}]; next } !(${2:NF} in a)' ${3:ref.file} ${4:query.file}",
+    "description": "filter by file"
+  },
+  "awkSepFile": {
+    "prefix": "awkSepFile",
+    "body": "awk -v file=$2 '{print > file\".\"${1:\\$1}}' ${2:file}",
+    "description": "Description"
+  },
+  "awksystem": {
+    "prefix": "awksystem",
+    "body": "awk '{system(\"wc \"\\$1)}' myfile",
+    "description": "run system command in awk"
+  },
+  "awkSam2Fq": {
+    "prefix": "awkSam2Fq",
+    "body": "awk '{print \"@\"$1\"\\n\"$10\"\\n+\\n\"$11}' ${1:input.sam} > ${2:output.fq}",
+    "description": "sam to fastq, single end mapping"
+  },
+  "awkKeepOneHeader": {
+    "prefix": "awkKeepOneHeader",
+    "body": "awk '{if(NR>1){if($0 !~ /${1:headerTag}/){print $0}}else{print $0}}'",
+    "description": "Description"
+  },
+  "qshortb": {
+    "prefix": "qshortb",
+    "body": "qsub -cwd -q short.q -b y -l h_rss=40G,h_rt=2:00:00 -j y -pe OpenMP"
+  },
+  "qshorts": {
+    "prefix": "qshorts",
+    "body": "qsub -cwd -q short.q -l h_rss=40G,h_rt=2:00:00 -j y -pe OpenMP"
+  },
+  "qmediumb": {
+    "prefix": "qmediumb",
+    "body": "qsub -cwd -q medium.q -b y -l h_rss=40G,h_rt=48:00:00 -j y -pe OpenMP"
+  },
+  "qmediums": {
+    "prefix": "qmediums",
+    "body": "qsub -cwd -q medium.q -l h_rss=40G,h_rt=48:00:00 -j y -pe OpenMP"
+  },
+  "qlongb": {
+    "prefix": "qlongb",
+    "body": "qsub -cwd -q long.q -b y -l h_rss=40G,h_rt=500:00:00 -j y -pe OpenMP"
+  },
+  "qlongs": {
+    "prefix": "qlongs",
+    "body": "qsub -cwd -q long.q -l h_rss=40G,h_rt=500:00:00 -j y -pe OpenMP"
+  },
+  "bowtieSam": {
+    "prefix": "bowtieSam",
+    "body": "bowtie2 -p ${1:threads} --no-unal -k 30 --local -x ${2:db} -U ${3:input.fq} -S ${4:output}.sam"
+  },
+  "bowtieBam": {
+    "prefix": "bowtieBam",
+    "body": "bowtie2 -p \\{params.threads\\} --no-unal -k 30 --local -x \\{params.db\\} -U \\{input.fq\\} --un-gz {output.un} 2>\\{output.bamLog\\} | samtools view -bS - > \\{output.bam\\}"
+  },
+  "bowtie2-build": {
+    "prefix": "bowtie2-build",
+    "body": "bowtie2-build -f ${1:ref.fa} $1"
+  },
+  "makeblastdb": {
+    "prefix": "makeblastdb",
+    "body": "makeblastdb -in ${1:in.fa} -dbtype ${2:nucl\\prot}",
+    "description": "make nucl/prot db"
+  },
+  "blastx": {
+    "prefix": "blastx",
+    "body": "blastx -query ${1:dna.fa} -num_threads ${2:threads} -db ${3:protein.db} -evalue 0.001 -out ${4:out}.blastx \\\n\t-outfmt \\\"6 qseqid qlen qstart qend qcovs sseqid slen sstart send sstrand length evalue pident mismatch gaps\\\"",
+    "description": "dna2protein"
+  },
+  "blastn": {
+    "prefix": "blastn",
+    "body": "blastn -query ${1:dna.fa} -num_threads ${2:threads} -db ${3:dna.db} -evalue 0.001 -out ${4:out}.blastn \\\n\t-outfmt \\\"6 qseqid qlen qstart qend qcovs sseqid slen sstart send sstrand length evalue pident mismatch gaps\\\"",
+    "description": "dna2dna"
+  },
+  "blastp": {
+    "prefix": "blastp",
+    "body": "blastp -query ${1:protein.fa} -num_threads ${2:threads} -db ${3:protein.db} -evalue 0.001 -out ${4:out}.blastp \\\n\t-outfmt \\\"6 qseqid qlen qstart qend qcovs sseqid slen sstart send sstrand length evalue pident mismatch gaps\\\"",
+    "description": "protein2protein"
+  },
+  "tblastn": {
+    "prefix": "tblastn",
+    "body": "tblastn -query ${1:protein.fa} -num_threads ${2:threads} -db ${3:dna.db} -evalue 0.001 -out ${4:out}.tblastn \\\n\t-outfmt \\\"6 qseqid qlen qstart qend qcovs sseqid slen sstart send sstrand length evalue pident mismatch gaps\\\"",
+    "description": "protein2dna"
+  },
+  "tblastx": {
+    "prefix": "tblastx",
+    "body": "tblastx -query ${1:dna.fa} -num_threads ${2:threads} -db ${3:dna.db} -evalue 0.001 -out ${4:out}.tblastx \\\n\t-outfmt \\\"6 qseqid qlen qstart qend qcovs sseqid slen sstart send sstrand length evalue pident mismatch gaps\\\"",
+    "description": "dna2dna @ protein"
+  },
+  "gmap_build": {
+    "prefix": "gmap_build",
+    "body": "gmap_build -g -D ${1:db.dir} -d ${2:db.name} ${3:db.fa}"
+  },
+  "gmappsl": {
+    "prefix": "gmappsl",
+    "body": "gmap -D ${1:db.dir} -d ${2:db.name} -Y -F -f psl -t ${3:threads} -n 5 -S --split-output ${4:out}.psl ${5:input.fa}"
+  },
+  "gmapgff3": {
+    "prefix": "gmapgff3",
+    "body": "gmap -D ${1:db.dir} -d ${2:db.name} -Y -F -f gff3_match_cdna -t ${3:threads} -n 5 --split-output ${4:out}.gff3 ${5:input.fa}"
+  },
+  "gmapcov": {
+    "prefix": "gmapcov",
+    "body": "cat ${1:gmap.output.psl.uniq} | grep -E '^>|Coverage' | awk '\\{if (\\$1 ~ /^>/) \\{gsub(\">\", \"\", \\$1); a = \\$1\\} else\\{b[a] = \\$2\\}\\} END\\{for (t in b) \\{print t\"\\t\"b[t]\\}\\}' > $1.cov.all\nawk '\\$2>=${2:90}' $1.cov.all > $1.cov.90"
+  },
+  "bwa": {
+    "prefix": "bwa",
+    "body": "endsnippet\n\nsnippet samtools \"to do\"",
+    "description": "to do"
+  },
+  "bamtools": {
+    "prefix": "bamtools",
+    "body": "endsnippet\n\nsnippet configStr \"config options for snakemake -C\"\nconfigStr=\"fastqTagPre=\\$fastqTagPre fastqTagPost=\\$fastqTagPost threads=\\$threads runtime=\\$runtime resultRoot=\\$resultRoot inDir=\\$readsRoot\"",
+    "description": "to do"
+  },
+  "dirEmpty": {
+    "prefix": "dirEmpty",
+    "body": "\tif [ -z \"\\$(ls -A ${1:/path/to/dir})\" ]; then\n\t\techo \"Empty\"\n\telse\n\t\techo \"Not Empty\"\n\tfi",
+    "description": "test dir empty"
+  },
+  "initSnakeYaml": {
+    "prefix": "initSnakeYaml",
+    "body": "#!/usr/bin/env bash\nif [ \\$# -lt 2 ]; then\n    echo \"Usage : \\$0 old/new test/local/cluster\"\n    exit;\nfi\n\nold=\\$1\nrun=\\$2\n\nworkDir=`pwd`\ntransFasta=\\$workDir/${1:trasnscriptome.fa}\nreadsRoot=\\$workDir\nsampleInfo=\\$workDir/${2:sampleID}.sample.tsv\ndesignInfo=\\$workDir/$2.design.tsv\nyaml=\\$workDir/$2.yaml\nresultRoot=\\$workDir/\\`basename \\$yaml .yaml\\`\n\nfind .snakemake -delete\nLenCutoff=18\nbowtieSeedLen=22\nadjPvalue=T\nbatch=\"batch1\"\ncontrol=\"DMSO\"\n\nif [ ! -e \\$resultRoot ]; then\n    mkdir \\$resultRoot\nfi\n\nSGE_STDOUT_PATH=\\$workDir/log\n\nif [ \\$old == \"new\"  ]; then\n    LENCUTOFF=\\$LenCutoff BOWTIESEEDLEN=\\$bowtieSeedLen TRANSFASTA=\\$transFasta READSROOT=\\$readsRoot SAMPLEINFO=\\$sampleInfo DESIGNINFO=\\$designInfo RESULTROOT=\\$resultRoot BATCH=\\$batch CONTROL=\\$control generateConfigureFile.sh configs/conf.template.yaml > \\$yaml\n\tif [ -e \\$SGE_STDOUT_PATH ]; then\n\t\tfind \\$SGE_STDOUT_PATH -delete\n\tfi\n\tmkdir \\$SGE_STDOUT_PATH\nfi\n\n# qsub for snakemake itself\nqsub=\"qsub -pe OpenMP 1 -l mem_free=1G -l h_rt=24:00:00 -m bes -j y -V -b y -cwd\";\nnumJobs=200\nthreads=20\nruntime=48\nmemFree=25\n\nconfigStr=\"threads=\\$threads runtime=\\$runtime resultRoot=\\$resultRoot inDir=\\$readsRoot\"\n\nif [ $run == \"cluster\"  ]; then\n\t$qsub -N $2.sk -o \\$SGE_STDOUT_PATH \\\n\t\"snakemake -p --jn \\\"{rulename}.{jobid}.sh\\\" -j \\$numJobs -c \\\"qsub -pe OpenMP \\$threads -l mem_free=\\${memFree}G -l h_rt=$runtime:00:00 -j y -o \\$SGE_STDOUT_PATH -V -b y -cwd\\\" \\\n\t-s pipeline/pipeline.sk --configfile \\$yaml --config \\$configStr -w 100 -d \\$workDir\";\nelif [ $run == \"local\"  ]; then\n    snakemake -s pipeline/pipeline.sk --configfile $yaml -j 40 -p\nelif [ $run == \"test\"  ]; then\n    snakemake -s pipeline/pipeline.sk --configfile $yaml -j 40 -np\nfi",
+    "description": "template for runSnake.sh"
+  },
+  "initSnakeShSimple": {
+    "prefix": "initSnakeShSimple",
+    "body": "#!/usr/bin/env bash\nif [ $# -lt 2 ]; then\n    echo \"Usage : \\$0 test/local/cluster inDir outDir\"\n    exit;\nfi\n\nrun=\\$1\ninDir=\\$2\noutDir=\\$3\n\nsnakeFile=${1:snakeFile.sk}\nworkDir=`pwd`\n\nif [[ -e .snakemake ]]; then\n    find .snakemake -delete\nfi\n\nif [ ! -e $outDir ]; then\n    mkdir $outDir\nfi\n\nSGE_STDOUT_PATH=$workDir/log\n\nif [[ ! -e $SGE_STDOUT_PATH ]]; then\n    mkdir $SGE_STDOUT_PATH\nfi\n\n# qsub for snakemake itself\nqsub=\"qsub -pe OpenMP 1 -l mem_free=1G -l h_rt=24:00:00 -m bes -j y -V -b y -cwd\";\nnumJobs=200\nthreads=1\nruntime=48\nmemFree=25\n\nconfigStr=\"threads=$threads runtime=$runtime outDir=$outDir inDir=$inDir\"\n\nif [ $run == \"cluster\"  ]; then\n    $qsub -N $snakeFile -o $SGE_STDOUT_PATH \\\n    \"snakemake -p --jn \\\"{rulename}.{jobid}.sh\\\" -j $numJobs -c \\\"qsub -pe OpenMP $threads -l mem_free=\\${memFree}G -l h_rt=$runtime:00:00 -j y -o $SGE_STDOUT_PATH -V -b y -cwd\\\" \\\n    -s $snakeFile --config $configStr -w 100 -d $workDir\";\nelif [ $run == \"local\"  ]; then\n    snakemake -s $snakeFile --config $configStr -j 40 -p\nelif [ $run == \"test\"  ]; then\n    snakemake -s $snakeFile --config $configStr -j 40 -np\nfi",
+    "description": "init sh file for snakemake with config string"
+  },
+  "fnafile": {
+    "prefix": "fnafile",
+    "body": "fnafile -i ${1:id.list} -o $1.fa ${2:input.fa}",
+    "description": "filter fasta file"
+  },
+  "fastasplit": {
+    "prefix": "fastasplit",
+    "body": "if [[ ! -e ${1:input.fa}.split ]]; then mkdir $1.split; fi\nfastasplit $1 -o $1.split -c ${2:chunkNum}\ncd $1.split\nfor file in *0*; do mv \\$file \\`echo \\$file | sed 's/.*_chunk_00000//'\\`.fa; done\ncd -",
+    "description": "split fasta into chunk"
+  },
+  "echoTab": {
+    "prefix": "echoTab",
+    "body": "echo ${1:Hello}$'\\t'${2:world}",
+    "description": "echo \\t in string"
+  },
+  "printf": {
+    "prefix": "printf",
+    "body": "printf \"%s %d %d %f\\n\" $sampleInfo $totalReads $mappedReads $mapRate",
+    "description": "Description"
+  },
+  "random": {
+    "prefix": "random",
+    "body": "seed=`echo $RANDOM`",
+    "description": "Description"
+  },
+  "numCalc": {
+    "prefix": "numCalc",
+    "body": "res=$((num1 / num2))\n#--------------------------------------------------\n# or\n# res=$((num1 + num2))\n#--------------------------------------------------",
+    "description": "Description"
+  },
+  "samplePropotion": {
+    "prefix": "samplePropotion",
+    "body": "awk 'BEGIN {srand()} !/^$/ { if (rand() <= .01) print \\$0}'",
+    "description": "sample 1% of input lines"
+  }
+}
