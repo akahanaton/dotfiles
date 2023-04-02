@@ -34,27 +34,64 @@ lvim.reload_config_on_save = true
 -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
 lvim.leader = "space"
 -- switch buffers
-lvim.keys.normal_mode["<leader>j"] = ":bprevious<cr>"
-lvim.keys.normal_mode["<leader>k"] = ":bnext<cr>"
+lvim.builtin.which_key.mappings["j"] = { ":bprevious<cr>", "previous buff" }
+lvim.builtin.which_key.mappings["k"] = { ":bnext<cr>", "next buff" }
 -- lvim.keys.normal_mode["<leader>bq"] = ":bp <BAR> bd #<cr>"
---" no copy delete, no copy change
 lvim.builtin.which_key.mappings.T = nil
+--" no copy delete, no copy change
 lvim.builtin.which_key.mappings.d = nil -- disable which-key default mappings
-lvim.keys.normal_mode["<leader>d"] = '"_d'
-lvim.keys.normal_mode["<leader>C"] = '"_C'
-lvim.keys.visual_mode["<leader>d"] = '"_d'
-lvim.keys.visual_mode["<leader>C"] = '"_C'
-lvim.keys.normal_mode["<leader>r"] = ":%s//g<LEFT><LEFT>"
-lvim.keys.visual_mode["<leader>r"] = ":s//g<LEFT><LEFT>"
-lvim.keys.normal_mode["vil"] = "^v$" -- select current line
-lvim.keys.normal_mode["E"] = "d^" --delete to the begining of the line
-lvim.keys.normal_mode["T"] = "y$" -- Yank from the cursor to the end of the line
-lvim.keys.visual_mode["//"] = 'y/<C-R>"<CR>' --search selected text as a re
-lvim.keys.normal_mode["<backspace>"] = "<<" -- Yank from the cursor to the end of the line
-lvim.keys.visual_mode["<backspace>"] = "<gv" --search selected text as a re
-lvim.keys.normal_mode["_"] = ">>" -- Yank from the cursor to the end of the line
-lvim.keys.visual_mode["_"] = ">gv" --search selected text as a re
+lvim.builtin.which_key.mappings["d"] = { '"_d', "no copy delete" }
+lvim.builtin.which_key.mappings["C"] = { '"_C', "no copy change" }
+lvim.builtin.which_key.vmappings["d"] = { '"_d', "no copy delete" }
+lvim.builtin.which_key.vmappings["C"] = { '"_c', "no copy change" }
+lvim.builtin.which_key.mappings["r"] = { ":%s//g<LEFT><LEFT>", "whole file replace" }
+lvim.builtin.which_key.vmappings["r"] = { ":s//g<LEFT><LEFT>", "visual replace" }
+lvim.builtin.which_key.mappings["o"] = { "<c-v>", "Visual mode" }
 
+local wk = require("which-key")
+local vopts = {
+	mode = "v", -- VISUAL mode
+	prefix = "",
+	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+	silent = true, -- use `silent` when creating keymaps
+	noremap = true, -- use `noremap` when creating keymaps
+	nowait = true, -- use `nowait` when creating keymaps
+}
+local vmappings = {
+	-- lvim.keys.visual_mode["_"] = ">gv"
+	-- lvim.keys.visual_mode["<backspace>"] = "<gv"
+	["_"] = { ">gv", "Indent right" },
+	["<backspace>"] = { "<gv", "Indent left" },
+	["//"] = { 'y/<C-R>"<CR>', "search selected" }, --search selected text as a re
+}
+wk.register(vmappings, vopts)
+local opts = {
+	mode = "n", -- NORMAL mode
+	-- prefix: use "<leader>f" for example for mapping everything related to finding files
+	-- the prefix is prepended to every mapping part of `mappings`
+	prefix = "",
+	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+	silent = true, -- use `silent` when creating keymaps
+	noremap = true, -- use `noremap` when creating keymaps
+	nowait = true, -- use `nowait` when creating keymaps
+}
+local mappings = {
+	["_"] = { ">>", "Indent right" },
+	["<backspace>"] = { "<<", "Indent left" },
+	["vil"] = { "^v$", "select line" }, --search selected text as a re
+	["E"] = { "d^", "delete to begin" },
+	["T"] = { "y$", "Yank to end" },
+}
+wk.register(mappings, opts)
+
+lvim.builtin.which_key.mappings.w = nil -- disable which-key default mappings
+lvim.builtin.which_key.mappings["w"] = {
+	name = "Which Key",
+	a = { ":WhichKey<cr>", "all mappings" },
+	v = { ":WhichKey '' v<cr>", "all mappings, visual" },
+	l = { ":WhichKey <leader><cr>", "all leader mappings" },
+	s = { ":WhichKey <leader> v<cr>", "all leader mappings, visual" },
+}
 -- -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
