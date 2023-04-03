@@ -1,0 +1,103 @@
+# for ~/.local/share/marker/user_commands.txt
+sshfs -o follow_symlinks -o transform_symlinks -o idmap=user wenm@10.218.129.145:/home/wenm/ /home/wenm/##sshfs
+pip install neovim##vim
+git add .##git
+bzr branch http://bzr.savannah.gnu.org/r/gsrc/trunk gscr##gsrc
+make -C pkg/gnu/bash MAKE_ARGS_PARALLEL="-j10"##gsrc
+make -C pkg/gnu/bash install##gsrc
+datamash transpose <##datamash
+cut -f10,7,14,21 combined_SAM_output2_wfilters.txt | awk 'OFS="\t"{print $2,$1,$3,$4}' >##parcel
+R CMD INSTALL##R
+makepkg -s##arch
+sudo pacman -U##arch
+tmux list-keys##tmux
+git clone https://github.com/jalvesaq/colorout.git##R
+git clone https://github.com/cran/setwidth.git##R
+tmux list-key##tmux
+sudo pacman -Rsn##arch
+source activate py36##conda
+qsub -cwd -q long.q -pe OpenMP 16 -l h_rss=20G,h_rt=500:00:00 -j y##gislong
+qsub -cwd -q long.q -pe OpenMP 16 -l h_rss=20G,h_rt=500:00:00 -j y -b y##gislongb
+git commit -a -m "arch" && git push origin master##git
+gsettings set org.gnome.desktop.interface enable-animations false##arch
+bindkey -M vicmd##zsh
+Rscript -e 'rmarkdown::render("{RmdFile}")'##Rcmd
+pdftk file1.pdf file2.pdf cat output output.pdf##pdf
+grep -o -P '__(?:.(?!__))+'##regex_last_occurrence
+awk 'FNR==NR { a[$FieldIndex]; next } !($FieldIndex in a)' other main##awk
+cat {{number.colunmn}} | Rscript -e 'summary (as.numeric (readLines ("stdin")))'##Rcmd
+Rscript -e 'quantile(as.numeric (readLines ("stdin")), c(.25, .50, .75, .90, .99))'##Rcmd
+rsync -arp##rsync
+ip addr##arch
+sed -r "s/\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"##remove color
+tmate show-messages | grep  "ssh"  | tail -1 | cut -d ']' -f2  | sed 's/ ssh session: //' > ~/LinuxRCFiles/tmate.sh##tmate
+nautilus .##open
+tar -czvf name-of-archive.tar.gz /path/to/directory-or-file##tar
+Rscript --vanilla -e 'options(width=2000); library(data.table); args = commandArgs(trailingOnly=TRUE);  a=fread(args[1]); summary(a)'  {{input.table}}##Rcmd
+xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape##i3
+xmodmap -e "clear lock" #disable caps lock switch##i3
+python -c 'for ln in __import__("fileinput").input(): print(__import__("fuzzywuzzy").process.extractOne("ATCACG",(ln.split()[1])))' RHE1407.ATCACG.comment.tab | uniq##python fuzzy
+python -c 'for ln in __import__("fileinput").input(): print(__import__("re").findall("(ATC){s<=1}",(ln.split()[1])))' RHE1407.ATCACG.comment.tab | uniq##python fuzzy
+bowtie2 -p 40 --no-unal -k 30 --local -x {{db}} -U {{input.fq}} -S {{out.sam}}##bowtie
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch tags'##git
+xinput list-props 12##xinput
+xinput set-prop 12 273 1##xinput
+sudo ldconfig##ldconfig
+df -h /mnt/projects/wenm/rnaStructure/##hpc
+xcompmgr -fF &##wallpaper
+systemctl --user status feh.service##systemctl
+showkey -a##arch
+grep -v '^@' bowtie2/RHE1412.sam | cut -f4 |  histogram.py --percentage --max=4141030 --min=1##histogram
+qmod -sj##hpc
+qmod -usj##hpc
+feh --recursive --randomize --bg-fill ~/Pictures/wallpaper##feh
+makeblastdb -in Monodelphis_domestica.monDom5.cds.all.fa.rename.longest.fa -dbtype nucl##blast
+lftp ftp://hgdownload.soe.ucsc.edu/goldenPath##ucsc
+for file in *.bed; do new=`echo $file| sed 's/ \+/_/g'`; mv $file $new; done##removegap
+vi  -V9myVim.log##vim
+ctags -R --fields=+iaS --extra=+q --exclude=.git --exclude=json .##ctags
+find . -name "*.vim" -or -name "*.py" > cscope.files##cscope
+cscope -Rbq##cscope
+cpan -i##cpan
+find . -name "*.vim" -or -name "*.py" | xargs grep 'keywords'##vim
+gtags --gtagslabel ctags##gtags
+global -x main##gtags
+gtags --explain --gtagslabel ctags##gtags
+gtags --dump GTAGS##gtags
+bioawk -c fastx '{a = $name".fa"; print ">"$name"\n"$seq > a}' reference.fa##bioawk
+git reset --hard FETCH_HEAD##git
+sudo !!##sudo
+awk '$3=="SL7_TPP" && $6~"15S"' file.sam  | head | gawk '(!and(16,$2))'##sam
+% samtools view -F 0x10 {input.bam}##samtoolsForward
+% samtools view -f 0x10 {input.bam}##samtoolsReverse
+git reset --hard && git pull##git
+git ls-files -co --exclude-standard --exclude="*html*" --exclude=".*" | xargs git add##git
+git remote add origin##git
+git reset -- Human2/candidates_Regions.human.all.w20.xls##git exclude
+tic -o $HOME/.terminfo tmux-256color.terminfo##term
+cp -avR##cplinks
+git reset HEAD~##git undo commit
+yarn global add##yarn
+yarn global add javascript-typescript-langserver##yarn
+yarn global add bash-language-server##yarn
+yarn global add vscode-html-languageserver-bin##yarn
+sudo rsync -av /var/lib/mysql /data/ming##mysql
+sudo chmod 755 mysql##mysql
+mysqlshow --count##mysql
+mysql -t < rnafold.sql##mysql
+ipython profile create##ipython
+sed '1 i\someText' ##sed insert first line
+find results.2019-01-10/scatter.mutRate/ -type f -newermt 2019-01-18 -delete##find date
+conda install -c r r-devtools##conda
+sshfs -o allow_other,uid=1000,gid=1000 -o follow_symlinks -o transform_symlinks -o idmap=user wenm@10.218.129.145:/home/wenm/ /home/wenm/##sshfs
+feh -d -F --keep-zoom-vp *.png##feh
+printenv| grep DISPLAY##display
+export DISPLAY=:0##display
+pip install --prefix=/home/ming/software sklearn##pip
+sudo mount.cifs //10.218.128.45/research /mnt/rdrive/ -o user=wenm,password=wmA9187483,uid=ming,gid=985,workgroup=a-gis,iocharset=utf8##mount
+pacman -Sw##only download
+yaourt rxvt-unicode-pixbuf##urxvt
+R -e "rmarkdown::render('2019-06-28.newRT.Rmd')"##R
+prefetch --option-file srr.list##srr
+for id in `cat srr.list`; do fastq-dump -Z -split-files $id | pigz > $id.fastq.gz; done##srr
+inkscape -d 300 test.pdf --export-png=test.png##inkscape

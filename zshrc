@@ -104,9 +104,9 @@ plugins=(
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
-
-
-[ -f ~/dotfiles/zshrc.export ] && source ~/dotfiles/zshrc.export
+# for zsh-completions
+autoload -U compinit && compinit
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 source $ZSH/oh-my-zsh.sh
 
@@ -126,7 +126,6 @@ function reset_trap {
   trap - INT
 }
 
-autoload -U compinit && compinit # for zsh-completions
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec reset_trap
 bindkey '^o' autosuggest-execute
