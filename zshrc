@@ -72,7 +72,6 @@ plugins=(
   python
   emoji
   zsh-completions
-  battery
   emotty
   zsh-autosuggestions
 )
@@ -104,7 +103,7 @@ plugins=(
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
-# for zsh-completions
+# for zsh-completions, before source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
@@ -113,8 +112,6 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/dotfiles/zshrc.alias ] && source ~/dotfiles/zshrc.alias
 [ -f ~/dotfiles/zshrc.config ] && source ~/dotfiles/zshrc.config
 [[ -s "$HOME/.local/share/marker/marker.sh" ]] && source "$HOME/.local/share/marker/marker.sh"
-
-test -r /Users/mingwen/.opam/opam-init/init.zsh && . /Users/mingwen/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
