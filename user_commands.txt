@@ -101,3 +101,4 @@ R -e "rmarkdown::render('2019-06-28.newRT.Rmd')"##R
 prefetch --option-file srr.list##srr
 for id in `cat srr.list`; do fastq-dump -Z -split-files $id | pigz > $id.fastq.gz; done##srr
 inkscape -d 300 test.pdf --export-png=test.png##inkscape
+grep -Ff <(awk -F',' '/CS2_232/{print $3}' cards.raw.format.csv ) cards.json.csv##grep

@@ -5,15 +5,14 @@
 # must before: export ZSH=$HOME/.oh-my-zsh if treat it as plugin
 
 export ZSH=$HOME/.oh-my-zsh
-cd ~
 
 zstyle ':omz:update' mode auto
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-ZSH_THEME="amuse"
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME="amuse"
 ZSH_THEME="random"
 
 # Set list of themes to load
@@ -21,7 +20,7 @@ ZSH_THEME="random"
 # cause zsh load theme from this variable instead of
 # looking in ~/.oh-my-zsh/themes/
 # An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# ZSH_THEME_RANDOM_CANDIDATES=( "cypher" "duellj" "evan" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -123,6 +122,27 @@ function reset_trap {
   trap - INT
 }
 
+function git_prompt_info() {
+    ref=$(git-branch-name -q -h 12 -b 64) || return
+    echo "${ZSH_THEME_GIT_PROMPT_PREFIX}${ref}${ZSH_THEME_GIT_PROMPT_CLEAN}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
+}
+
+
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec reset_trap
 bindkey '^o' autosuggest-execute
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/bright/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/bright/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/bright/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/bright/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<

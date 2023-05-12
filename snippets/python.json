@@ -6,12 +6,12 @@
   },
   "mainargs": {
     "prefix": "mainargs",
-    "body": "def main(args):\n\tgffFile = open(args.gffFile,\"r\")\n\tline=gffFile.readline()\n\tprint(line)\n\tgffFile.close()\n\nif __name__ == '__main__':\nimport argparse\n\tparser = argparse.ArgumentParser(description='Count the number of coding base pairs in each gene.')\n\tparser.add_argument('gffFile', type=str, help='gmap gff3 file of reference position, -f gmap_match_cdna')\n\t#--------------------------------------------------\n\t# parser.add_argument('-c', dest='cleanCodon', type=str, default='Y', choices=['Y','N'], help='clean stop codon: Y/N')\n\t# parser.add_argument('-r', dest='cleanByRef', type=str, default=None, help='aligment format')\n\t#--------------------------------------------------\n\targs = parser.parse_args()\n\tmain(args)",
+    "body": "def main(args):\n\tgffFile = open(args.gffFile,\"r\")\n\tline=gffFile.readline()\n\tprint(line)\n\tgffFile.close()\n\nif __name__ == '__main__':\nimport argparse\n\tparser = argparse.ArgumentParser(description='Count the number of coding base pairs in each gene.')\n\tparser.add_argument('gffFile', type=str, help='gmap gff3 file of reference position, -f gmap_match_cdna')\n\t# --------------------------------------------------\n\t# parser.add_argument('-c', dest='cleanCodon', type=str, default='Y', choices=['Y','N'], help='clean stop codon: Y/N')\n\t# parser.add_argument('-r', dest='cleanByRef', type=str, default=None, help='aligment format')\n\t# --------------------------------------------------\n\targs = parser.parse_args()\n\tmain(args)",
     "description": "to do"
   },
   "args": {
     "prefix": "args",
-    "body": "import argparse\n\tparser = argparse.ArgumentParser(description='Count the number of coding base pairs in each gene.')\n\tparser.add_argument('gffFile', type=str, help='gmap gff3 file of reference position, -f gmap_match_cdna')\n\t#--------------------------------------------------\n\t# parser.add_argument('-c', dest='cleanCodon', type=str, default='Y', choices=['Y','N'], help='clean stop codon: Y/N')\n\t# parser.add_argument('-r', dest='cleanByRef', type=str, default=None, help='aligment format')\n\t#--------------------------------------------------\n\targs = parser.parse_args()",
+    "body": "import argparse\n\tparser = argparse.ArgumentParser(description='Count the number of coding base pairs in each gene.')\n\tparser.add_argument('gffFile', type=str, help='gmap gff3 file of reference position, -f gmap_match_cdna')\n\t# --------------------------------------------------\n\t# parser.add_argument('-c', dest='cleanCodon', type=str, default='Y', choices=['Y','N'], help='clean stop codon: Y/N')\n\t# parser.add_argument('-r', dest='cleanByRef', type=str, default=None, help='aligment format')\n\t# --------------------------------------------------\n\targs = parser.parse_args()",
     "description": "to do"
   },
   "readGff3": {

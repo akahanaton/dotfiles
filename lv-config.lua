@@ -13,6 +13,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.timeoutlen = 200
 vim.o.foldcolumn = "auto" -- make folds visible left of the sign column. Very cool ui feature!
+vim.opt.foldenable = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.swapfile = true -- creates a swapfile
@@ -23,8 +24,9 @@ vim.cmd("set directory=$HOME/.vim/swapfiles ")
 lvim.log.level = "info"
 lvim.format_on_save = {
 	enabled = true,
-	pattern = "*",
 	timeout = 1000,
+	pattern = "*.py,*.lua,*.sh",
+	filter = require("lvim.lsp.utils").format_filter,
 }
 
 lvim.reload_config_on_save = true
@@ -36,7 +38,7 @@ lvim.leader = "space"
 -- switch buffers
 lvim.builtin.which_key.mappings["j"] = { ":bprevious<cr>", "previous buff" }
 lvim.builtin.which_key.mappings["k"] = { ":bnext<cr>", "next buff" }
-lvim.builtin.which_key.mappings["bq"] = {":bp <BAR> bd #<cr>", "close buff"}
+lvim.builtin.which_key.mappings["bq"] = { ":bp <BAR> bd #<cr>", "close buff" }
 lvim.builtin.which_key.mappings.T = nil
 --" no copy delete, no copy change
 lvim.builtin.which_key.mappings.d = nil -- disable which-key default mappings
@@ -208,12 +210,11 @@ lvim.builtin.bufferline.options.always_show_bufferline = true
 lvim.builtin.breadcrumbs.active = false -- disable nvim-navic, not work, need uninstall it from source
 
 -- Automatically install missing parsers when entering buffer
-lvim.builtin.treesitter.auto_install = true
+lvim.builtin.treesitter.auto_install = false
+-- lvim.builtin.treesitter.ignore_install = { "help" }
 
 -- Automatically select the first item in the completion list
 lvim.builtin.cmp.completion.completeopt = "menu,menuone"
-
--- lvim.builtin.treesitter.ignore_install = { "haskell" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
 
@@ -226,16 +227,12 @@ require("lvim.lsp.manager").setup("pylsp", {
 	settings = {
 		pylsp = {
 			plugins = {
-				pycodestyle = {
-					-- ignore = { "W391" },
-					-- maxLineLength = 80,
-					enabled = false,
-				},
+				pyflakes = { enabled = false },
+				pycodestyle = { enabled = false },
 			},
 		},
 	},
 })
--- require("lspconfig").csharp_ls.setup({}) -- for c#, not work
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
@@ -267,11 +264,12 @@ formatters.setup({
 
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
-	{ command = "flake8", filetypes = { "python" } },
 	{
-		command = "shellcheck",
-		args = { "--severity", "warning" },
+		command = "flake8",
+		filetypes = { "python" },
+		-- args = { "--severity", "warning" }
 	},
+	-- { command = "shellcheck", args = { "--severity", "warning" } },
 })
 
 -- -- Autocommands () <https://neovim.io/doc/user/autocmd.html>
@@ -460,6 +458,7 @@ lvim.builtin.cmp.formatting.source_names["dictionary"] = ""
 --      marks: table (e.g. {1, 0, 23, 15})
 --      str: string (can be plaintext or Lua pattern if is_pattern is true)
 
+-- align.nvim
 local NS = { noremap = true, silent = true }
 
 vim.keymap.set("x", "aa", function()
@@ -590,4 +589,10 @@ lvim.plugins = {
 		end,
 	},
 	{ "Vonr/align.nvim" },
+	{
+		"fei6409/log-highlight.nvim",
+		config = function()
+			require("log-highlight").setup({})
+		end,
+	},
 }
