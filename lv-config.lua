@@ -202,15 +202,15 @@ lvim.builtin.telescope.defaults.file_ignore_patterns = {
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerSync
 lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
+-- lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.bufferline.options.always_show_bufferline = true
-lvim.builtin.breadcrumbs.active = false -- disable nvim-navic, not work, need uninstall it from source
+lvim.builtin.breadcrumbs.active = false -- disable nvim-navic, maybe work now
 
 -- Automatically install missing parsers when entering buffer
-lvim.builtin.treesitter.auto_install = false
+lvim.builtin.treesitter.auto_install = true
 -- lvim.builtin.treesitter.ignore_install = { "help" }
 
 -- Automatically select the first item in the completion list
@@ -222,17 +222,17 @@ lvim.builtin.cmp.completion.completeopt = "menu,menuone"
 -- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
 
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
-lvim.lsp.installer.setup.automatic_installation = false
-require("lvim.lsp.manager").setup("pylsp", {
-	settings = {
-		pylsp = {
-			plugins = {
-				pyflakes = { enabled = false },
-				pycodestyle = { enabled = false },
-			},
-		},
-	},
-})
+lvim.lsp.installer.setup.automatic_servers_installation = true
+-- require("lvim.lsp.manager").setup("pylsp", {
+-- 	settings = {
+-- 		pylsp = {
+-- 			plugins = {
+-- 				pyflakes = { enabled = false },
+-- 				pycodestyle = { enabled = false },
+-- 			},
+-- 		},
+-- 	},
+-- })
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
@@ -267,7 +267,7 @@ linters.setup({
 	{
 		command = "flake8",
 		filetypes = { "python" },
-		-- args = { "--severity", "warning" }
+		args = { "--severity", "warning" },
 	},
 	-- { command = "shellcheck", args = { "--severity", "warning" } },
 })
@@ -366,8 +366,8 @@ lvim.builtin.lualine.sections.lualine_a = {
 
 lvim.builtin.lualine.sections.lualine_b = {
 	"branch",
-	{ "diagnostics", source = { "nvim" }, sections = { "error" } },
-	{ "diagnostics", source = { "nvim" }, sections = { "warn" } },
+	-- { "diagnostics", source = { "nvim" }, sections = { "error" } },
+	-- { "diagnostics", source = { "nvim" }, sections = { "warn" } },
 	{ "filename", file_status = false, path = 1 },
 	{
 		"%w",
@@ -391,8 +391,8 @@ lvim.builtin.lualine.sections.lualine_b = {
 
 lvim.builtin.lualine.sections.lualine_c = {
 	"diff",
-	{ "diagnostics", source = { "nvim" }, sections = { "error" } },
-	{ "diagnostics", source = { "nvim" }, sections = { "warn" } },
+	-- { "diagnostics", source = { "nvim" }, sections = { "error" } },
+	-- { "diagnostics", source = { "nvim" }, sections = { "warn" } },
 	{
 		"%w",
 		cond = function()
@@ -427,6 +427,7 @@ lvim.builtin.lualine.sections.lualine_x = {
 lvim.builtin.lualine.sections.lualine_z = {
 	{ "location", separator = { right = "" }, left_padding = 2 },
 }
+
 -- gd tabline, change tabline = nil to:
 -- tabline = { lualine_a = nil },
 lvim.builtin.lualine.tabline.lualine_a = {
@@ -440,11 +441,11 @@ lvim.builtin.lualine.tabline.lualine_a = {
 
 -- add cmp sources
 -- tmux
-table.insert(lvim.builtin.cmp.sources, { name = "tmux", keyword_length = 2 })
+-- table.insert(lvim.builtin.cmp.sources, { name = "tmux", keyword_length = 2 })
 -- cmp-dictionary
 ----------------------------------------------------
-table.insert(lvim.builtin.cmp.sources, { name = "dictionary", keyword_length = 2 })
-lvim.builtin.cmp.formatting.source_names["dictionary"] = ""
+-- table.insert(lvim.builtin.cmp.sources, { name = "dictionary", keyword_length = 2 })
+-- lvim.builtin.cmp.formatting.source_names["dictionary"] = ""
 ----------------------------------------------------
 
 -- align_to_char(length, reverse, preview, marks)
@@ -490,10 +491,8 @@ end, NS)
 lvim.plugins = {
 	{ "AndrewRadev/bufferize.vim" },
 	{ "tpope/vim-repeat" },
-	{ "puremourning/vimspector" },
-	{ "andersevenrud/cmp-tmux" },
+	-- { "puremourning/vimspector" },
 	{ "tpope/vim-surround" },
-	-- { "lunarvim/colorschemes" },
 	{ "tpope/vim-eunuch" },
 	{ "akahanaton/vim-coloresque" },
 	{
@@ -506,18 +505,17 @@ lvim.plugins = {
 			})
 		end,
 	},
-	{
-		"uga-rosa/cmp-dictionary",
-		before = "nvim-cmp",
-		requires = "hrsh7th/nvim-cmp",
-		config = function()
-			require("cmp_dictionary").setup({
-				dic = { ["*"] = "/Users/mingwen/linuxrcfiles/words" },
-				async = true,
-				document = true, -- not wrok, need change the source code
-			})
-		end,
-	}, -- vim dictionary source for cmp
+	-- {
+	-- 	"uga-rosa/cmp-dictionary",
+	-- 	before = "nvim-cmp",
+	-- 	config = function()
+	-- 		require("cmp_dictionary").setup({
+	-- 			dic = { ["*"] = "/Users/mingwen/linuxrcfiles/words" },
+	-- 			async = true,
+	-- 			document = true, -- not wrok, need change the source code
+	-- 		})
+	-- 	end,
+	-- }, -- vim dictionary source for cmp
 	{
 		"ethanholz/nvim-lastplace",
 		config = function()
@@ -565,8 +563,8 @@ lvim.plugins = {
 		event = "BufRead",
 		config = function()
 			require("hop").setup()
-			vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
-			vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
+			vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true }) -- use js
+			vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true }) -- use jS
 		end,
 	},
 	{
@@ -595,4 +593,5 @@ lvim.plugins = {
 			require("log-highlight").setup({})
 		end,
 	},
+	-- { "andersevenrud/cmp-tmux" }, -- not working in lunarvim
 }
